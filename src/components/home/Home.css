@@ -1,3 +1,9 @@
 .home-container { 
     display: flex;
 }
+.home-container .container-left{
+    box-shadow: 0 0 5px 0 rgba(0,0,0,.1);
+}
+.home-container .container-right{
+    flex-grow: 1
+}
