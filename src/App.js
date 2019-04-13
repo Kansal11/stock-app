@@ -1,26 +1,44 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import rootReducer from './reducers';
+import ErrorBoundary from './ErrorBoundary';
+
+import Home from './components/home/presentational/Home';
+
 import './App.css';
+
+const initialState = {};
+
+const muiTheme = createMuiTheme({
+  fontFamily: '"Segoe UI"'
+});
+
+const store = createStore(
+  rootReducer,
+  initialState
+);
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      < ErrorBoundary >
+        <Provider store={store}>
+          {/* <ConnectedRouter history={history}> */}
+          <MuiThemeProvider muiTheme={muiTheme}>
+            <div>
+              <Home />
+              {/* <Routes />
+              <ToastContainer
+                style={{ top: "70px", minWidth: "450px", zIndex: 20001 }}
+              />
+              <Notification /> */}
+            </div>
+          </MuiThemeProvider>
+          {/* </ConnectedRouter> */}
+        </Provider>
+      </ErrorBoundary >
     );
   }
 }
