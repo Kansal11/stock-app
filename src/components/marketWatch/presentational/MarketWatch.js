@@ -14,58 +14,71 @@ import '../MarketWatch.css';
 
 class MarketWatch extends Component {
 
-    generate(element) {
-        return [0, 1, 2].map(value =>
-            React.cloneElement(element, {
-                key: value,
-            }),
-        );
+    constructor(props) {
+        super(props);
+        console.log(this.props);
+        this.onSearch = this.onSearch.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.fetchExistingStocks();
+    }
+
+    onSearch(event) {
+        if (event.target.value && event.target.value.length > 2) {
+            this.props.searchStock(event.target.value)
+        }
     }
 
     render() {
+        const { searchResults } = this.props;
         return (
-                <div className='marketwatch-container'>
-                    <div className='search'>
-                        <div className='search-input-container'>
-                            <div className='search-icon'>
-                                <SearchIcon />
-                            </div>
-                            <InputBase
+            <div className='marketwatch-container'>
+                <div className='search'>
+                    <div className='search-input-container'>
+                        <div className='search-icon'>
+                            <SearchIcon />
+                        </div>
+                        <InputBase
                             placeholder="Search…" className="search-input"
+                            onChange={this.onSearch}
                         />
-                        </div>
-                        <div className='search-box-wrap'>
-                            <ul className='search-results'>
-                                <li className='search-result-item'>
-                                    <span>TECHM</span>
-                                    <Button variant="contained" color="primary" className='add-btn'>
-                                        Add
-                                    </Button>
-                                </li>
-                            </ul>
-                        </div>
-                       
                     </div>
-                    <Grid item xs={12} md={6} className='market-watch'>
-                            <List>
-                                {this.generate(
-                                    <ListItem>
-                                        <ListItemText
-                                            primary="Single-line item"
-                                        />
-                                        <ListItemSecondaryAction>
-                                            <Button variant="contained" color="primary" className='add-btn'>
-                                                Buy
-                                            </Button>
-                                            <IconButton aria-label="Delete">
-                                                <DeleteIcon />
-                                            </IconButton>
-                                        </ListItemSecondaryAction>
-                                    </ListItem>,
-                                )}
-                            </List>
-                    </Grid>
+                    <div className='search-box-wrap'>
+                        <ul className='search-results'>
+                            {searchResults.map((stockObj, idx) => {
+                                return (
+                                    <li className='search-result-item' key={idx}>
+                                        <span>{stockObj["2. name"]}</span>
+                                        <Button variant="contained" color="primary" className='add-btn' onClick={(stockObj) => this.props.addDtockToMW(stockObj)}>
+                                            Add
+                                        </Button>
+                                    </li>
+                                )
+                            })}
+
+                        </ul>
+                    </div>
+
                 </div>
+                <Grid item xs={12} md={6} className='market-watch'>
+                    <List>
+                        <ListItem>
+                            <ListItemText
+                                primary="Single-line item"
+                            />
+                            <ListItemSecondaryAction>
+                                <Button variant="contained" color="primary" className='add-btn'>
+                                    Buy
+                                        </Button>
+                                <IconButton aria-label="Delete">
+                                    <DeleteIcon />
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                    </List>
+                </Grid>
+            </div>
         )
     }
 }

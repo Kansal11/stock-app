@@ -1,0 +1,3 @@
+export default {
+    ALPHAVANTAGE_API_KEY: 'U2Y12CUR674DM8DP'
+}

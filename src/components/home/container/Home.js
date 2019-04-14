@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Home from '../presentational/Home';
-import AppConstants from '../../../constants/AppConstants';
+import { AppConstants } from '../../../constants';
 
 const mapStateToProps = state => ({
 	isCashDialogOpen: state.app.isCashDialogOpen

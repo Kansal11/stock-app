@@ -1,5 +1,4 @@
-import AppConstants from '../constants/AppConstants';
-import App from '../App';
+import { AppConstants } from '../constants';
 
 const initialState = {
     isCashDialogOpen: false,

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
+import { createLogicMiddleware } from 'redux-logic';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import rootReducer from './reducers';
+import logics from './logics';
 import ErrorBoundary from './ErrorBoundary';
 
 import { Home } from './components/home';
@@ -15,9 +17,18 @@ const muiTheme = createMuiTheme({
   fontFamily: '"Segoe UI"'
 });
 
+const deps = {}
+
+const logicMiddleware = createLogicMiddleware(logics, deps);
+
+const composedEnhancers = compose(
+	applyMiddleware(logicMiddleware)
+);
+
 const store = createStore(
   rootReducer,
-  initialState
+  initialState,
+  composedEnhancers
 );
 
 class App extends Component {
