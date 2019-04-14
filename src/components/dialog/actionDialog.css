@@ -1,0 +1,7 @@
+.dialog-container{
+    width: 400px;
+}
+
+.dialog-row { 
+    display: flex;
+}

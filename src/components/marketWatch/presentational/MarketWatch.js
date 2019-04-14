@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
+import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
@@ -23,18 +24,29 @@ class MarketWatch extends Component {
 
     render() {
         return (
-            <div>
                 <div className='marketwatch-container'>
                     <div className='search'>
-                        <div className='search-icon'>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search…"
+                        <div className='search-input-container'>
+                            <div className='search-icon'>
+                                <SearchIcon />
+                            </div>
+                            <InputBase
+                            placeholder="Search…" className="search-input"
                         />
+                        </div>
+                        <div className='search-box-wrap'>
+                            <ul className='search-results'>
+                                <li className='search-result-item'>
+                                    <span>TECHM</span>
+                                    <Button variant="contained" color="primary" className='add-btn'>
+                                        Add
+                                    </Button>
+                                </li>
+                            </ul>
+                        </div>
+                       
                     </div>
-                    <Grid item xs={12} md={6}>
-                        <div className=''>
+                    <Grid item xs={12} md={6} className='market-watch'>
                             <List>
                                 {this.generate(
                                     <ListItem>
@@ -42,6 +54,9 @@ class MarketWatch extends Component {
                                             primary="Single-line item"
                                         />
                                         <ListItemSecondaryAction>
+                                            <Button variant="contained" color="primary" className='add-btn'>
+                                                Buy
+                                            </Button>
                                             <IconButton aria-label="Delete">
                                                 <DeleteIcon />
                                             </IconButton>
@@ -49,10 +64,8 @@ class MarketWatch extends Component {
                                     </ListItem>,
                                 )}
                             </List>
-                        </div>
                     </Grid>
                 </div>
-            </div>
         )
     }
 }

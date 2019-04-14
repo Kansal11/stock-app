@@ -1,0 +1,4 @@
+export default {
+    OPEN_CASH_DIALOG: 'app/OPEN_CASH_DIALOG',
+    CLOSE_CASH_DIALOG: 'app/CLOSE_CASH_DIALOG'
+};

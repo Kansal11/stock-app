@@ -5,7 +5,7 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import rootReducer from './reducers';
 import ErrorBoundary from './ErrorBoundary';
 
-import Home from './components/home/presentational/Home';
+import { Home } from './components/home';
 
 import './App.css';
 
