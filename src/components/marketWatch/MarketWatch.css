@@ -43,15 +43,21 @@
     border-bottom: 1px solid #eeee;
     overflow: hidden;
     text-overflow: ellipsis;
+    align-items: center;
 }
 
-.market-watch {
+.market-watch-list {
     overflow-y: scroll;
+    max-width: 100% !important;
 }
 
 .add-btn.MuiButton-root-119 {
     padding: 0px;
     font-size: 0.7rem;
+}
+
+.search-result-item .add-btn {
+    height: 32px;
 }
 
 @media (min-width: 960px) {

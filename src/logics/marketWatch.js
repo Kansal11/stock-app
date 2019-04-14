@@ -27,20 +27,33 @@ const searchStockLogic = createLogic({
 
  const addStockLogic = createLogic({
 	type: AppConstants.ADD_STOCK_REQUESTED,
-	process({ getState, action }) {
+	process({ getState, action }, dispatch, done) {
 		let existingStocks = localStorage.getItem('stocks');
 		if(!existingStocks) {
 			existingStocks = [];
 		}
+		else {
+			existingStocks = JSON.parse(existingStocks);
+		}
 		existingStocks.push(action.payload);
-		localStorage.setItem('stocks', existingStocks);
+		localStorage.setItem('stocks', JSON.stringify(existingStocks));
+		dispatch({
+			type: AppConstants.ADD_STOCK_SUCCEEDED,
+			payload: existingStocks
+		})
 	}
  })
 
  const getStocksLogic = createLogic({
 	 type: AppConstants.FETCH_EXISTING_STOCKS,
 	 process({ getState, action }, dispatch, done) {
-		const existingStocks = localStorage.getItem('stocks');
+		let existingStocks = localStorage.getItem('stocks');
+		if(existingStocks) {
+			existingStocks = JSON.parse(existingStocks);
+		}
+		else {
+			existingStocks = [];
+		}
 		dispatch({
 			type: AppConstants.EXISTING_STOCKS_FETCHED,
 			payload: existingStocks
@@ -49,8 +62,27 @@ const searchStockLogic = createLogic({
 	}
  })
 
+ const removeStockLogic = createLogic({
+	type: AppConstants.REMOVE_EXISTING_STOCK,
+	process({ getState, action }, dispatch, done) {
+	   let existingStocks = localStorage.getItem('stocks');
+	   if(existingStocks) {
+		   existingStocks = JSON.parse(existingStocks);
+	   }
+	   const idx = existingStocks.findIndex(stockObj => stockObj["2. name"] === action.payload["2. name"] && stockObj["1. symbol"] === action.payload["1. symbol"]);
+	   existingStocks.splice(idx, 1);
+	   localStorage.setItem('stocks', JSON.stringify(existingStocks));
+	   dispatch({
+		   type: AppConstants.EXISTING_STOCKS_FETCHED,
+		   payload: existingStocks
+	   })
+	   done();
+   }
+})
+
 export default [
 	searchStockLogic,
 	addStockLogic,
-	getStocksLogic
+	getStocksLogic,
+	removeStockLogic
 ];

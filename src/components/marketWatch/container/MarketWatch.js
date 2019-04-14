@@ -4,7 +4,8 @@ import { AppConstants } from '../../../constants';
 
 const mapStateToProps = state => ({
 	searchResults: state.marketWatch.searchResults,
-	isSearchInProgress: state.marketWatch.isSearchInProgress,
+    isSearchInProgress: state.marketWatch.isSearchInProgress,
+    existingStocks: state.marketWatch.existingStocks
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -14,7 +15,7 @@ const mapDispatchToProps = dispatch => ({
             payload: searchTerm
         })
     },
-    addDtockToMW: (stockObj) => {
+    addStockToMW: (stockObj) => {
         dispatch({
             type: AppConstants.ADD_STOCK_REQUESTED,
             payload: stockObj
@@ -24,7 +25,18 @@ const mapDispatchToProps = dispatch => ({
 		dispatch({
 			type: AppConstants.FETCH_EXISTING_STOCKS
 		})
-	}
+    },
+    removeSearchResults: () => {
+        dispatch({
+			type: AppConstants.CLEAR_SEARCH_RESULTS
+		})
+    },
+    removeStock: (stockObj) => {
+        dispatch({
+            type: AppConstants.REMOVE_EXISTING_STOCK,
+            payload: stockObj
+        })
+    }
 })
 
 export default connect(

@@ -28,10 +28,13 @@ class MarketWatch extends Component {
         if (event.target.value && event.target.value.length > 2) {
             this.props.searchStock(event.target.value)
         }
+        else {
+            this.props.removeSearchResults();
+        }
     }
 
     render() {
-        const { searchResults } = this.props;
+        const { searchResults, existingStocks } = this.props;
         return (
             <div className='marketwatch-container'>
                 <div className='search'>
@@ -40,7 +43,7 @@ class MarketWatch extends Component {
                             <SearchIcon />
                         </div>
                         <InputBase
-                            placeholder="Search…" className="search-input"
+                            placeholder="Search for stock…" className="search-input"
                             onChange={this.onSearch}
                         />
                     </div>
@@ -49,8 +52,11 @@ class MarketWatch extends Component {
                             {searchResults.map((stockObj, idx) => {
                                 return (
                                     <li className='search-result-item' key={idx}>
-                                        <span>{stockObj["2. name"]}</span>
-                                        <Button variant="contained" color="primary" className='add-btn' onClick={(stockObj) => this.props.addDtockToMW(stockObj)}>
+                                        <div>
+                                            <span>{stockObj["2. name"]}</span>
+                                            <span> ({stockObj["1. symbol"]})</span>
+                                        </div>
+                                        <Button variant="contained" color="primary" className='add-btn' onClick={event => this.props.addStockToMW(stockObj)}>
                                             Add
                                         </Button>
                                     </li>
@@ -61,21 +67,27 @@ class MarketWatch extends Component {
                     </div>
 
                 </div>
-                <Grid item xs={12} md={6} className='market-watch'>
+                <Grid item xs={12} md={6} className='market-watch-list'>
                     <List>
-                        <ListItem>
-                            <ListItemText
-                                primary="Single-line item"
-                            />
-                            <ListItemSecondaryAction>
-                                <Button variant="contained" color="primary" className='add-btn'>
-                                    Buy
-                                        </Button>
-                                <IconButton aria-label="Delete">
-                                    <DeleteIcon />
-                                </IconButton>
-                            </ListItemSecondaryAction>
-                        </ListItem>
+                        {existingStocks.map((stockObj,idx) => {
+                            return (
+                                <ListItem key={idx}>
+                                    <ListItemText
+                                        primary={stockObj["2. name"]}
+                                        secondary={stockObj["1. symbol"]}
+                                    />
+                                    <ListItemSecondaryAction>
+                                        <Button variant="contained" color="primary" className='add-btn'>
+                                            Buy
+                                                </Button>
+                                        <IconButton aria-label="Delete" onClick={() => this.props.removeStock(stockObj)}>
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </ListItemSecondaryAction>
+                                </ListItem>
+                            )
+                        })}
+                        
                     </List>
                 </Grid>
             </div>
