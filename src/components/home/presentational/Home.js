@@ -11,12 +11,12 @@ class Home extends Component {
 
 
     render() {
-        const { isCashDialogOpen, cashBalance, isBuyDialogOpen, stockBeingBought } = this.props;
+        const { isCashDialogOpen, cashBalance, isBuyDialogOpen, stockBeingBought, currentStockPrice } = this.props;
 
         return (
             <div>
-                <ActionDialog open={isCashDialogOpen} onClose={this.props.closeCashDialog} cashBalance = {cashBalance}/>
-                {isBuyDialogOpen && <BuyDialog open={isBuyDialogOpen} onClose={this.props.closeBuyDialog} stock = {stockBeingBought} getQuote = {this.props.getQuote}/>}
+                <ActionDialog open={isCashDialogOpen} onClose={this.props.closeCashDialog} cashBalance={cashBalance}/>
+                {isBuyDialogOpen && <BuyDialog open={isBuyDialogOpen} onClose={this.props.closeBuyDialog} price={currentStockPrice} stock={stockBeingBought} getQuote = {this.props.getQuote}/>}
                 <AppBar 
                     isCashDialogOpen = {isCashDialogOpen}
                     openCashDialog = {this.props.openCashDialog}

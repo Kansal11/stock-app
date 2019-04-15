@@ -6,7 +6,8 @@ const mapStateToProps = state => ({
 	isCashDialogOpen: state.app.isCashDialogOpen,
 	cashBalance: state.app.cashBalance,
 	isBuyDialogOpen: state.app.isBuyDialogOpen,
-	stockBeingBought: state.app.stockBeingBought
+	stockBeingBought: state.app.stockBeingBought,
+	currentStockPrice: state.marketWatch.currentStockPrice
 });
 
 const mapDispatchToProps = dispatch => ({

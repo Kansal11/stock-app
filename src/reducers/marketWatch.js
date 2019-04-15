@@ -3,7 +3,8 @@ import AppConstants from '../constants/AppConstants';
 const initialState = {
     searchResults: [],
     isSearchInProgress: false,
-    existingStocks: []
+    existingStocks: [],
+    currentStockPrice: null
 };
 
 export default (state = initialState, action) => {
@@ -38,6 +39,11 @@ export default (state = initialState, action) => {
         return {
             ...state,
             existingStocks: action.payload
+        }
+    case AppConstants.STOCK_QUOTE_FETCHED: 
+        return {
+            ...state,
+            currentStockPrice: action.payload["05. price"]
         }
     default:
       return state;

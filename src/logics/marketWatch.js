@@ -40,7 +40,7 @@ const searchStockLogic = createLogic({
 		.then(result => {
 			dispatch({
 				type: AppConstants.STOCK_QUOTE_FETCHED,
-				payload: result.bestMatches
+				payload: result["Global Quote"]
 			});	
 			done();		
 		})
