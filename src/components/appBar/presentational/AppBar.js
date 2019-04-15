@@ -15,9 +15,7 @@ const styles = {
     flexGrow: 1,
   },
   grow: {
-    // display: 'flex',
-    flexGrow: 1,
-    // justifyContent: 'space-between'
+    flexGrow: 1
   },
   menuButton: {
     marginLeft: -12,
@@ -27,12 +25,7 @@ const styles = {
 
 class MenuAppBar extends React.Component {
   state = {
-    auth: true,
     anchorEl: null,
-  };
-
-  handleChange = event => {
-    this.setState({ auth: event.target.checked });
   };
 
   handleMenu = event => {
@@ -44,8 +37,8 @@ class MenuAppBar extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { auth, anchorEl } = this.state;
+    const { classes, cashBalance } = this.props;
+    const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
     return (
@@ -56,13 +49,8 @@ class MenuAppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className = {classes.grow}>
-                  Cash Balance: 100
+                  Cash Balance: {cashBalance}
             </Typography>
-            {/* <div className={classes.grow}>
-              <Typography variant="h6" color="inherit">
-                  Photos
-              </Typography>
-            </div> */}
             <div>
               <IconButton
                 aria-owns={open ? 'menu-appbar' : undefined}

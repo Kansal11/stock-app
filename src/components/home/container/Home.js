@@ -3,7 +3,10 @@ import Home from '../presentational/Home';
 import { AppConstants } from '../../../constants';
 
 const mapStateToProps = state => ({
-	isCashDialogOpen: state.app.isCashDialogOpen
+	isCashDialogOpen: state.app.isCashDialogOpen,
+	cashBalance: state.app.cashBalance,
+	isBuyDialogOpen: state.app.isBuyDialogOpen,
+	stockBeingBought: state.app.stockBeingBought
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -12,9 +15,21 @@ const mapDispatchToProps = dispatch => ({
 			type: AppConstants.OPEN_CASH_DIALOG
 		});
 	},
-	closeCashDialog: () => {
+	closeCashDialog: (cash) => {
 		dispatch({
-			type: AppConstants.CLOSE_CASH_DIALOG
+			type: AppConstants.CLOSE_CASH_DIALOG,
+			payload: cash
+		});
+	},
+	closeBuyDialog: (cash) => {
+		dispatch({
+			type: AppConstants.CLOSE_BUY_DIALOG,
+			payload: cash
+		});
+	},
+	getQuote: () => {
+		dispatch({
+			type: AppConstants.GET_STOCK_QUOTE_REQUESTED
 		});
 	}
 })

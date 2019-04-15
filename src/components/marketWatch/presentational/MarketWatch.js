@@ -16,7 +16,6 @@ class MarketWatch extends Component {
 
     constructor(props) {
         super(props);
-        console.log(this.props);
         this.onSearch = this.onSearch.bind(this);
     }
 
@@ -77,9 +76,9 @@ class MarketWatch extends Component {
                                         secondary={stockObj["1. symbol"]}
                                     />
                                     <ListItemSecondaryAction>
-                                        <Button variant="contained" color="primary" className='add-btn'>
+                                        <Button variant="contained" color="primary" className='add-btn' onClick={() => this.props.openBuyDialog(stockObj)}>
                                             Buy
-                                                </Button>
+                                        </Button>
                                         <IconButton aria-label="Delete" onClick={() => this.props.removeStock(stockObj)}>
                                             <DeleteIcon />
                                         </IconButton>

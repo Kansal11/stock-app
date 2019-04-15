@@ -36,6 +36,12 @@ const mapDispatchToProps = dispatch => ({
             type: AppConstants.REMOVE_EXISTING_STOCK,
             payload: stockObj
         })
+    },
+    openBuyDialog: (stockObj) => {
+        dispatch({
+            type: AppConstants.OPEN_BUY_DIALOG,
+            payload: stockObj
+        })
     }
 })
 
