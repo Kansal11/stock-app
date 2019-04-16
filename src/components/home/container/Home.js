@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  openCashDialog: () => {
+  	openCashDialog: () => {
 		dispatch({
 			type: AppConstants.OPEN_CASH_DIALOG
 		});
@@ -22,15 +22,20 @@ const mapDispatchToProps = dispatch => ({
 			payload: cash
 		});
 	},
-	closeBuyDialog: (cash) => {
+	closeBuyDialog: (stockInfo) => {
 		dispatch({
 			type: AppConstants.CLOSE_BUY_DIALOG,
-			payload: cash
+			payload: stockInfo
 		});
 	},
 	getQuote: () => {
 		dispatch({
 			type: AppConstants.GET_STOCK_QUOTE_REQUESTED
+		});
+	},
+	fetchCashBalance: () => {
+		dispatch({
+			type: AppConstants.GET_CASH_BALANCE_REQUESTED
 		});
 	}
 })

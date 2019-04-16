@@ -16,6 +16,9 @@ class MarketWatch extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            searchTerm: ''
+        }
         this.onSearch = this.onSearch.bind(this);
     }
 
@@ -24,7 +27,10 @@ class MarketWatch extends Component {
     }
 
     onSearch(event) {
-        if (event.target.value && event.target.value.length > 2) {
+        this.setState({
+            searchTerm: event.target.value
+        })
+        if (event.target.value.length > 1) {
             this.props.searchStock(event.target.value)
         }
         else {
@@ -43,6 +49,7 @@ class MarketWatch extends Component {
                         </div>
                         <InputBase
                             placeholder="Search for stock…" className="search-input"
+                            value={this.state.searchTerm}
                             onChange={this.onSearch}
                         />
                     </div>

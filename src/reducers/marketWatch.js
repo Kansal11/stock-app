@@ -43,7 +43,12 @@ export default (state = initialState, action) => {
     case AppConstants.STOCK_QUOTE_FETCHED: 
         return {
             ...state,
-            currentStockPrice: action.payload["05. price"]
+            currentStockPrice: action.payload && Number(action.payload["05. price"])
+        }
+    case AppConstants.CLOSE_BUY_DIALOG:
+        return {
+            ...state,
+            currentStockPrice: null
         }
     default:
       return state;

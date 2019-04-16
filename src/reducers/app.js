@@ -17,8 +17,13 @@ export default (state = initialState, action) => {
     case AppConstants.CLOSE_CASH_DIALOG: {
         return {
             ...state,
-            cashBalance : action.payload ? (state.cashBalance + action.payload) : state.cashBalance,
             isCashDialogOpen: false
+        }
+    }
+    case AppConstants.ADD_CASH_REQUESTED: {
+        return {
+            ...state,
+            cashBalance: action.payload
         }
     }
     case AppConstants.OPEN_BUY_DIALOG: {
@@ -32,6 +37,12 @@ export default (state = initialState, action) => {
         return {
             ...state,
             isBuyDialogOpen : false
+        }
+    }
+    case AppConstants.BUY_SUCCESSFUL: {
+        return {
+            ...state,
+            cashBalance: action.payload.updatedBalance
         }
     }
     default:

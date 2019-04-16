@@ -4,15 +4,22 @@ import StockList from '../stockList/presentational/stockList';
 import '../Portfolio.css';
 
 class Portfolio extends Component {
+
+    componentDidMount() {
+        this.props.fetchExistingHoldings();
+    }
+
     render() {
+        const { holdings } = this.props;
+
         return (
             <div>
                 <div className='portfolio-container'>
-                    <div>
+                    <div className="header">
                         Holdings 
-                        <span> 18 </span>
+                        <span> {holdings.length} </span>
                     </div>
-                    <StockList />
+                    <StockList holdings={holdings}/>
                 </div>
             </div>
         )

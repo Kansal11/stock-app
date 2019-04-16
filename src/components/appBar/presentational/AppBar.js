@@ -49,7 +49,7 @@ class MenuAppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className = {classes.grow}>
-                  Cash Balance: {cashBalance}
+                  Cash Balance: {cashBalance && cashBalance.toFixed(2)}
             </Typography>
             <div>
               <IconButton

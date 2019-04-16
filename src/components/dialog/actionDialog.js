@@ -39,7 +39,7 @@ class ActionDialog extends React.Component {
         <DialogTitle id="simple-dialog-title">Cash </DialogTitle>
         <DialogContent>
             <DialogContentText>
-              Current Balance: {cashBalance} 
+              Current Balance: {cashBalance.toFixed(2)} 
             </DialogContentText>
             <TextField
               autoFocus

@@ -7,6 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -21,7 +22,6 @@ const CustomTableCell = withStyles(theme => ({
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
     marginTop: '0px',
     height: '300px',
@@ -37,22 +37,8 @@ const styles = theme => ({
   },
 });
 
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return { id, name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Stock 1', 159, 6.0, 24, 4.0),
-  createData('Stock 2', 237, 9.0, 37, 4.3),
-  createData('Stock 3', 262, 16.0, 24, 6.0),
-  createData('Stock 4', 305, 3.7, 67, 4.3),
-  createData('Stock 5', 356, 16.0, 49, 3.9),
-];
-
 function CustomizedTable(props) {
-  const { classes } = props;
+  const { classes, holdings } = props;
 
   return (
     <Paper className={classes.root}>
@@ -60,24 +46,31 @@ function CustomizedTable(props) {
         <TableHead>
           <TableRow>
             <CustomTableCell>Stock</CustomTableCell>
+            <CustomTableCell align="right">Symbol</CustomTableCell>
             <CustomTableCell align="right">Qty.</CustomTableCell>
-            <CustomTableCell align="right">Avg.Cost</CustomTableCell>
-            <CustomTableCell align="right">Curr. Value)</CustomTableCell>
-            <CustomTableCell align="right">PnL</CustomTableCell>
-            <CustomTableCell align="right">Net Chg.</CustomTableCell>
-            <CustomTableCell align="right">Actions</CustomTableCell>
+            <CustomTableCell align="right">Price/share</CustomTableCell>
+            <CustomTableCell align="right">Total Cost</CustomTableCell>
+            {/* <CustomTableCell align="right">Actions</CustomTableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <TableRow className={classes.row} key={row.id}>
+          {!holdings || holdings.length === 0 ? <TableRow>
+            <CustomTableCell colspan="5">"Please search and add stocks to buy"</CustomTableCell>
+          </TableRow> : null}
+          {holdings.map((row,idx) => (
+            <TableRow className={classes.row} key={idx}>
               <CustomTableCell component="th" scope="row">
                 {row.name}
               </CustomTableCell>
-              <CustomTableCell align="right">{row.calories}</CustomTableCell>
-              <CustomTableCell align="right">{row.fat}</CustomTableCell>
-              <CustomTableCell align="right">{row.carbs}</CustomTableCell>
-              <CustomTableCell align="right">{row.protein}</CustomTableCell>
+              <CustomTableCell align="right">{row.symbol}</CustomTableCell>
+              <CustomTableCell align="right">{row.qty}</CustomTableCell>
+              <CustomTableCell align="right">{row.price}</CustomTableCell>
+              <CustomTableCell align="right">{(row.price*row.qty).toFixed(2)}</CustomTableCell>
+              {/* <CustomTableCell align="right">
+                <Button variant="contained" color="primary" className='add-btn' onClick={() => this.props.openBuyDialog()}>
+                    Buy
+                </Button>
+              </CustomTableCell> */}
             </TableRow>
           ))}
         </TableBody>

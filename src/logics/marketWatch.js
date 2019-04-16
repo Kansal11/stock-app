@@ -24,12 +24,60 @@ const searchStockLogic = createLogic({
 	}
  });
 
-//  const buyStockLogic = createLogic({
-// 	type: AppConstants.BUY_STOCK_REQUESTED,
-// 	process({ getState, action }, dispatch, done) {	
-// 		done();
-// 	}
-//  })
+ const buyStockLogic = createLogic({
+	type: AppConstants.CLOSE_BUY_DIALOG,
+	process({ getState, action }, dispatch, done) {
+		if(!action.payload){
+			return;
+		}
+		let { cashBalance, stockBeingBought } = getState().app;
+		const { qty, price } = action.payload;
+
+		cashBalance = cashBalance - qty*price;
+		const stockBought = {
+			name: stockBeingBought["2. name"],
+			symbol: stockBeingBought["1. symbol"],
+			price,
+			qty
+		}
+		let existingHoldings = localStorage.getItem('holdings');
+		if(!existingHoldings) {
+			existingHoldings = [];
+		}
+		else {
+			existingHoldings = JSON.parse(existingHoldings);
+		}
+		existingHoldings.push(stockBought);
+		localStorage.setItem('holdings', JSON.stringify(existingHoldings));
+		localStorage.setItem('cashBalance', cashBalance);
+		dispatch({
+			type: AppConstants.BUY_SUCCESSFUL,
+			payload: {
+				updatedBalance: cashBalance,
+				stockBought
+			}
+		});
+		done();
+	}
+ })
+
+ const getHoldingsLogic = createLogic({
+	type: AppConstants.FETCH_EXISTING_HOLDINGS,
+	process({ getState, action }, dispatch, done) {
+	   let existingHoldings = localStorage.getItem('holdings');
+	   if(existingHoldings) {
+		existingHoldings = JSON.parse(existingHoldings);
+	   }
+	   else {
+		existingHoldings = [];
+	   }
+	   dispatch({
+		   type: AppConstants.EXISTING_HOLDINGS_FETCHED,
+		   payload: existingHoldings
+	   })
+	   done();
+   }
+})
 
  const getStockPriceLogic = createLogic({
 	type: AppConstants.GET_STOCK_QUOTE_REQUESTED,
@@ -52,6 +100,38 @@ const searchStockLogic = createLogic({
 		});
 	}
  });
+
+ const addCashLogic = createLogic({
+	 type: AppConstants.CLOSE_CASH_DIALOG,
+	 process({ getState, action }, dispatch, done) {
+		if(!action.payload) {
+			return;
+		}
+		let { cashBalance } = getState().app; 
+		cashBalance += action.payload;
+		localStorage.setItem('cashBalance', cashBalance);
+		dispatch({
+			type: AppConstants.ADD_CASH_REQUESTED,
+			payload: cashBalance
+		})
+		done();
+    }
+ })
+
+ const getCashLogic = createLogic({
+	 type: AppConstants.GET_CASH_BALANCE_REQUESTED,
+	 process({ getState, action }, dispatch, done) {
+		let cashBalance = localStorage.getItem('cashBalance');
+		if(!cashBalance) {
+			cashBalance = 0;
+		}
+		dispatch({
+			type: AppConstants.ADD_CASH_REQUESTED,
+			payload: +cashBalance
+		})
+		done();
+    }
+ })
 
  const addStockLogic = createLogic({
 	type: AppConstants.ADD_STOCK_REQUESTED,
@@ -113,6 +193,9 @@ export default [
 	addStockLogic,
 	getStocksLogic,
 	removeStockLogic,
-	// buyStockLogic,
-	getStockPriceLogic
+	buyStockLogic,
+	getStockPriceLogic,
+	addCashLogic,
+	getCashLogic,
+	getHoldingsLogic
 ];
